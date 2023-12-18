@@ -8,6 +8,9 @@ create table Client(
 );
 alter table Client
 add constraint pk_client primary key (id);
+ALTER TABLE client   
+   add CONSTRAINT CHK_mail    
+   CHECK ( E_mail  like '%@%.%');
 
 
 create table Concessionnaire(
@@ -17,6 +20,9 @@ create table Concessionnaire(
 );
 alter table Concessionnaire
 add constraint pk_concessionnaire primary key(Adresse);
+ALTER TABLE concessionnaire   
+   add CONSTRAINT CHK_taille    
+   CHECK ( taille_stockage > 30);
 
 
 create table Employe(
@@ -41,6 +47,9 @@ create table Poste(
 );
 alter table poste
 add constraint pk_poste primary key(Fonction);
+ALTER TABLE poste
+   add CONSTRAINT chk_salaire   
+   CHECK (base_salariale > 1400);
 
 
 create table occupe(
@@ -55,7 +64,9 @@ Alter table occupe
 Add constraint fn_occup_fk foreign key (fonction) references poste(Fonction);
 Alter table occupe
 Add constraint mat_occup_fk foreign key (matricule) references Employe(Matricule);
-
+--ALTER TABLE occupe
+--   add CONSTRAINT chk_cohesion_date   
+--   CHECK (debut < fin );
 
 
 create table Voiture(
@@ -73,6 +84,12 @@ create table Voiture(
 );
 alter table voiture 
     add constraint pk_voiture primary key(id_voiture);
+ALTER TABLE voiture   
+   add CONSTRAINT CHK_km    
+   CHECK ( kilometrage >= 0);
+ALTER TABLE voiture   
+   add CONSTRAINT CHK_prix_voiture    
+   check ( prix > 0);
     
 create table vente(
     id_client int,
@@ -89,6 +106,9 @@ alter table vente
     add constraint client_vente_fk foreign key(id_client) references client(id);
 alter table vente 
     add constraint vehicule_vente_fk foreign key(id_vehicule) references Voiture(id_voiture);
+ALTER TABLE vente   
+   modify date_achat    
+   default '04-jan-2024'  ;
 
 create table reprise(
     id_client int,
@@ -105,10 +125,18 @@ alter table reprise
     add constraint client_reprise_fk foreign key(id_client) references client(id);
 alter table reprise 
     add constraint vehicule_reprise_fk foreign key(id_vehicule) references Voiture(id_voiture);
-
+ALTER TABLE reprise   
+   modify Date_reprise  
+   default '04-jan-2024'  ;
+   
 create table Stockage(
     id_vehicule int,
     adr_concessionnaire varchar(25),
     date_exe date,
     date_retrait date
 );
+alter table stockage 
+    add constraint pk_stockage primary key(id_vehicule,adr_concessionnaire,date_exe);
+ALTER TABLE stockage   
+   modify date_exe   
+   default '04-jan-2024'  ;
