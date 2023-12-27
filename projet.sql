@@ -2,54 +2,59 @@ create table Client(
     id int,
     E_mail varchar(20),
     nom varchar(15),
-    prenom varchar(15),
-    -- a définir
-    promotion varchar(13)
-);
-alter table Client
-add constraint pk_client primary key (id);
-ALTER TABLE client   
-   add CONSTRAINT CHK_mail    
-   CHECK ( E_mail  like '%@%.%');
+    prenom varchar(15));
+    
+    alter table Client
+    add constraint pk_client 
+    primary key (id);
+    ALTER TABLE client   
+    add CONSTRAINT CHK_mail    
+    CHECK ( E_mail  like '%@%.%');
 
 
 create table Concessionnaire(
     Adresse varchar(25),
     Taille_stockage int,
-    mat_responsable int
-);
-alter table Concessionnaire
-add constraint pk_concessionnaire primary key(Adresse);
-ALTER TABLE concessionnaire   
-   add CONSTRAINT CHK_taille    
-   CHECK ( taille_stockage > 30);
+    mat_responsable int);
+
+    alter table Concessionnaire
+    add constraint pk_concessionnaire 
+    primary key(Adresse);
+    ALTER TABLE concessionnaire   
+    add CONSTRAINT CHK_taille    
+    CHECK ( taille_stockage > 30);
 
 
 create table Employe(
     Matricule int,
     nom varchar(15),
     prenom varchar(15),
-    lieu_de_travail varchar(25)
-);
-alter table Employe 
-add constraint pk_employe primary key (Matricule);
-Alter table Employe
-Add constraint concess_de_reference foreign key (lieu_de_travail) references Concessionnaire(Adresse);
+    lieu_de_travail varchar(25));
 
-Alter table Concessionnaire
-Add constraint Responsabilite foreign key (mat_responsable) references Employe(Matricule);
+    alter table Employe 
+    add constraint pk_employe 
+    primary key (Matricule);
+    Alter table Employe
+    Add constraint concess_de_reference 
+    foreign key (lieu_de_travail) 
+    references Concessionnaire(Adresse);
+    Alter table Concessionnaire
+    Add constraint Responsabilite
+     foreign key (mat_responsable) 
+     references Employe(Matricule);
 
 
 create table Poste(
     Fonction varchar(15),
     base_salariale int,
-    pourcentage_vente int
-);
-alter table poste
-add constraint pk_poste primary key(Fonction);
-ALTER TABLE poste
-   add CONSTRAINT chk_salaire   
-   CHECK (base_salariale > 1400);
+    pourcentage_vente int);
+
+    alter table poste
+    add constraint pk_poste 
+    primary key(Fonction);
+    ALTER TABLE poste
+    add CONSTRAINT chk_salaire   
+    CHECK (base_salariale > 1400);
 
 
 create table occupe(
@@ -108,7 +113,7 @@ alter table vente
     add constraint vehicule_vente_fk foreign key(id_vehicule) references Voiture(id_voiture);
 ALTER TABLE vente   
    modify date_achat    
-   default '04-jan-2024'  ;
+   default '04-jan-2024' ;
 
 create table reprise(
     id_client int,
@@ -127,7 +132,7 @@ alter table reprise
     add constraint vehicule_reprise_fk foreign key(id_vehicule) references Voiture(id_voiture);
 ALTER TABLE reprise   
    modify Date_reprise  
-   default '04-jan-2024'  ;
+   default '04-jan-2024' ;
    
 create table Stockage(
     id_vehicule int,
@@ -139,4 +144,4 @@ alter table stockage
     add constraint pk_stockage primary key(id_vehicule,adr_concessionnaire,date_exe);
 ALTER TABLE stockage   
    modify date_exe   
-   default '04-jan-2024'  ;
+   default '04-jan-2024' ;
