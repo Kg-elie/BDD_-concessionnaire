@@ -1,0 +1,174 @@
+-- contraintes:
+------mails:
+ALTER TABLE Clients
+ADD CONSTRAINT check_format_email
+CHECK (REGEXP_LIKE(e_mail, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'));
+
+
+------salaire>=SMIC
+ALTER TABLE Poste
+ADD CONSTRAINT check_base_salariale
+CHECK (base_salariale >= 1400);
+
+
+------date debut < date fin 
+ALTER TABLE occupe
+ADD CONSTRAINT check_dates
+CHECK (
+    (debut < fin) OR
+    (debut IS NULL AND fin IS NULL) OR
+    (fonction = 'CDD')
+);
+
+-------stockage
+ALTER TABLE Concessionnaire
+ADD CONSTRAINT check_taille_stockage
+CHECK (taille_stockage > 30);
+
+
+
+--------kilometrage
+ALTER TABLE Voiture
+ADD CONSTRAINT check_kilometrage
+CHECK (kilometrage >= 0);
+
+
+
+--------prix
+ALTER TABLE Voiture
+ADD CONSTRAINT check_prix
+CHECK (prix > 0);
+
+-------date (jcp)
+
+-------vendeur
+
+CREATE OR REPLACE TRIGGER vente_check_vendeur
+BEFORE INSERT OR UPDATE ON Vente
+FOR EACH ROW
+DECLARE
+    v_count NUMBER;
+BEGIN
+    IF :NEW.mat_vendeur IS NOT NULL THEN
+        -- Vérifier si le matricule du vendeur correspond à un employé ayant la fonction 'vendeur'
+        SELECT COUNT(*)
+        INTO v_count
+        FROM Employe
+        WHERE Matricule = :NEW.mat_vendeur AND fonction = 'vendeur';
+
+        IF v_count = 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Le matricule du vendeur doit correspondre à un employé ayant la fonction vendeur.');
+        END IF;
+    END IF;
+END;
+
+
+
+--------date reprise par default(jcp)
+
+
+--------datte reprise
+
+ALTER TABLE Reprise
+ADD CONSTRAINT check_date_reprise
+CHECK (Date_reprise >= (SELECT Date_achat FROM Vente WHERE id_vehicule = Reprise.id_vehicule));
+
+
+--------ancienneté
+
+CREATE OR REPLACE TRIGGER check_anciennete_trigger
+BEFORE INSERT OR UPDATE ON Concessionnaire
+FOR EACH ROW
+DECLARE
+    anciennete NUMBER;
+BEGIN
+    -- Calcul de l'ancienneté de l'employé
+    SELECT EXTRACT(YEAR FROM sysdate) - EXTRACT(YEAR FROM date_embauche)
+    INTO anciennete
+    FROM Employe
+    WHERE Matricule = :NEW.mat_responsable;
+
+    -- Vérification de l'ancienneté
+    IF anciennete < 4 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Le responsable du concessionnaire doit avoir au moins 4 ans d''ancienneté.');
+    END IF;
+END;
+
+
+
+--------estimation:
+
+CREATE OR REPLACE TRIGGER update_estimation_trigger
+BEFORE INSERT OR UPDATE ON Reprise
+FOR EACH ROW
+BEGIN
+    -- Calcul de l'estimation
+    IF :NEW.id_vehicule IS NOT NULL THEN
+        SELECT ((Voiture.kilometrage / 50) - Voiture.prix) + (Voiture.anne_fabrication - EXTRACT(YEAR FROM sysdate)) * 150
+        INTO :NEW.estimation
+        FROM Voiture
+        WHERE id_voiture = :NEW.id_vehicule;
+    END IF;
+END;
+
+
+
+---------promotion vendeur
+
+CREATE OR REPLACE TRIGGER update_percentage_trigger
+AFTER INSERT ON Vente
+FOR EACH ROW
+DECLARE
+    total_ventes NUMBER;
+BEGIN
+    -- Calcul du total des ventes pour le vendeur sur le mois en cours
+    SELECT SUM(prix_achat)
+    INTO total_ventes
+    FROM Vente
+    WHERE mat_vendeur = :NEW.mat_vendeur
+    AND EXTRACT(MONTH FROM Date_achat) = EXTRACT(MONTH FROM sysdate)
+    AND EXTRACT(YEAR FROM Date_achat) = EXTRACT(YEAR FROM sysdate);
+
+    -- Augmentation du pourcentage si les ventes dépassent 30 000€
+    IF total_ventes > 30000 THEN
+        UPDATE Employe
+        SET pourcentage_vente = pourcentage_vente + 10
+        WHERE Matricule = :NEW.mat_vendeur;
+    END IF;
+END;
+
+
+--------pour ajouter des réductions
+
+CREATE TABLE OffrePromotionnelle (
+    id_offre NUMBER PRIMARY KEY,
+    nom_offre VARCHAR2(50),
+    reduction_pourcentage NUMBER
+);
+
+ALTER TABLE Client
+ADD id_offre_promo NUMBER,
+ADD CONSTRAINT fk_client_offre FOREIGN KEY (id_offre_promo) REFERENCES OffrePromotionnelle(id_offre);
+
+ALTER TABLE Vente
+ADD prix_promo NUMBER;
+
+CREATE OR REPLACE TRIGGER calcul_prix_promo_trigger
+BEFORE INSERT ON Vente
+FOR EACH ROW
+DECLARE
+    montant_reduit NUMBER;
+BEGIN
+    -- Calcul du montant réduit en fonction de la promotion du client
+    SELECT NVL(reduction_pourcentage, 0)
+    INTO montant_reduit
+    FROM OffrePromotionnelle op
+    JOIN Client c ON c.id_offre_promo = op.id_offre
+    WHERE c.id = :NEW.id_client;
+
+    -- Calcul du prix promotionnel
+    :NEW.prix_promo := :NEW.prix_achat - (:NEW.prix_achat * (montant_reduit / 100));
+END;
+
+
+
