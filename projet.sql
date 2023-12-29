@@ -157,25 +157,26 @@
 
 -- C/ Manipulation des données
     -- 1.Quels sont les clients ayant acheté et revendu leurs véhicules avant 3 ans ?
-    SELECT DISTINCT(c.nom), DISTINCT(c.prenom)
+    SELECT distinct(c.id),c.nom, c.prenom
     FROM CLIENT c, reprise r, vente v
     where c.id = r.id_client 
     and c.id = v.id_client 
     and v.id_vehicule = r.id_vehicule
-    and v.date_achat - r.Date_reprise <= 3*365;
+    and r.Date_reprise - v.date_achat   <= 1*365 ;
     -- 2.Calculez les primes de ventes pour chaque vendeur pour l’année 2023.
-    select e.nom, e.prenom, sum(v.prix_achat)
+    select e.nom, e.prenom, sum(v.prix_achat)*0.1 prime_ventes
     from Employe e, vente v
     where e.matricule = v.mat_vendeur and v.date_achat BETWEEN '01-jan-2023' and '31-Dec-2023'
     GROUP by (e.nom,e.prenom);
     -- 3. Quelles voitures ont été acheté dans un concessionnaire et revendu dans un autre ?
-    select v.id_vehicule
-    from vente v, reprise r, Employe e1, Employe e2 
+    select v.id_vehicule, voit.modele, voit.immatriculation
+    from vente v, reprise r, Employe e1, Employe e2, voiture voit
     where v.id_vehicule = r.id_vehicule and v.date_achat < r.Date_reprise
     and e1.matricule = v.mat_vendeur and e2.matricule = r.mat_vendeur
-    and e1.lieu_de_travail != e2.lieu_de_travail;
+    and e1.lieu_de_travail != e2.lieu_de_travail
+    and v.id_vehicule = voit.id_voiture;
     -- 4. Calculer le profit de chaque concessionnaire sur l’année 2023.
-    select e.lieu_de_travail, sum(v.prix_achat) - sum(r.estimation) as profit
+    select e.lieu_de_travail, sum(v.prix_achat) as profit
     from vente v, reprise r,Employe e 
     where e.matricule = v.mat_vendeur or e.matricule = r.mat_vendeur
     group by e.lieu_de_travail;
