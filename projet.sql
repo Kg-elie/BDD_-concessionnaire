@@ -1,9 +1,9 @@
 -- A/ creation des tables et des contraites :
     create table Client(
         id int,
-        E_mail varchar(20),
-        nom varchar(15),
-        prenom varchar(15));
+        E_mail varchar(100),
+        nom varchar(100),
+        prenom varchar(100));
         
         alter table Client
         add constraint pk_client 
@@ -14,7 +14,7 @@
 
 
     create table Concessionnaire(
-        Adresse varchar(25),
+        Adresse varchar(100),
         Taille_stockage int,
         mat_responsable int);
 
@@ -23,14 +23,14 @@
         primary key(Adresse);
         ALTER TABLE concessionnaire   
         add CONSTRAINT CHK_taille    
-        CHECK ( taille_stockage > 30);
+        CHECK ( taille_stockage >= 30);
 
 
     create table Employe(
         Matricule int,
-        nom varchar(15),
-        prenom varchar(15),
-        lieu_de_travail varchar(25));
+        nom varchar(100),
+        prenom varchar(100),
+        lieu_de_travail varchar(100));
 
         alter table Employe 
         add constraint pk_employe 
@@ -46,7 +46,7 @@
 
 
     create table Poste(
-        Fonction varchar(15),
+        Fonction varchar(100),
         base_salariale int,
         pourcentage_vente int);
 
@@ -59,7 +59,7 @@
 
 
     create table occupe(
-        fonction varchar(15),
+        fonction varchar(100),
         matricule int, 
         debut date,
         fin date
@@ -77,16 +77,16 @@
 
     create table Voiture(
         id_voiture int,
-        immatriculation varchar(15),
-        modele varchar(15),
-        type_vehicule varchar(15),
+        immatriculation varchar(100),
+        modele varchar(100),
+        type_vehicule varchar(100),
         kilometrage int,
         prix int, 
-        motorisation varchar(15),
-        sellerie varchar(15),
-        couleur varchar(15),
-        anne_fabrication date,
-        carburant varchar(15)
+        motorisation varchar(100),
+        sellerie varchar(100),
+        couleur varchar(100),
+        anne_fabrication int,
+        carburant varchar(100)
     );
     alter table voiture 
         add constraint pk_voiture primary key(id_voiture);
@@ -137,7 +137,7 @@
     
     create table Stockage(
         id_vehicule int,
-        adr_concessionnaire varchar(25),
+        adr_concessionnaire varchar(100),
         date_exe date,
         date_retrait date
     );
@@ -147,10 +147,40 @@
     modify date_exe   
     default '04-jan-2024' ;
 
+    create table responsable(
+        mat_responsable int,
+        Adresse varchar(100)
+    );
+
 -- B/ jeu de données:
 
 
 -- C/ Manipulation des données
+    -- 1.Quels sont les clients ayant acheté et revendu leurs véhicules avant 3 ans ?
+    SELECT DISTINCT(c.nom), DISTINCT(c.prenom)
+    FROM CLIENT c, reprise r, vente v
+    where c.id = r.id_client 
+    and c.id = v.id_client 
+    and v.id_vehicule = r.id_vehicule
+    and v.date_achat - r.Date_reprise <= 3*365;
+    -- 2.Calculez les primes de ventes pour chaque vendeur pour l’année 2023.
+    select e.nom, e.prenom, sum(v.prix_achat)
+    from Employe e, vente v
+    where e.matricule = v.mat_vendeur and v.date_achat BETWEEN '01-jan-2023' and '31-Dec-2023'
+    GROUP by (e.nom,e.prenom);
+    -- 3. Quelles voitures ont été acheté dans un concessionnaire et revendu dans un autre ?
+    select v.id_vehicule
+    from vente v, reprise r, Employe e1, Employe e2 
+    where v.id_vehicule = r.id_vehicule and v.date_achat < r.Date_reprise
+    and e1.matricule = v.mat_vendeur and e2.matricule = r.mat_vendeur
+    and e1.lieu_de_travail != e2.lieu_de_travail;
+    -- 4. Calculer le profit de chaque concessionnaire sur l’année 2023.
+    select e.lieu_de_travail, sum(v.prix_achat) - sum(r.estimation) as profit
+    from vente v, reprise r,Employe e 
+    where e.matricule = v.mat_vendeur or e.matricule = r.mat_vendeur
+    group by e.lieu_de_travail;
+
+
 
 
 -- D/ Vues 
@@ -185,3 +215,8 @@ select nom, prenom, Adresse
 from concessionnaire, Employe
 where mat_responsable = matricule;
 
+-- E/  Intégrité des données : les triggers 
+
+
+
+-- F/  Méta-données
