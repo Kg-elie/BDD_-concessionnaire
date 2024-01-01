@@ -162,8 +162,7 @@
     where c.id = r.id_client 
     and c.id = v.id_client 
     and v.id_vehicule = r.id_vehicule
-    and r.Date_reprise - v.date_achat   <= 1*365 ;
-    
+    and v.date_achat - r.Date_reprise <= 3*365;
     -- 2.Calculez les primes de ventes pour chaque vendeur pour l’année 2023.
     select e.nom, e.prenom, sum(v.prix_achat)*0.1 prime_ventes
     from Employe e, vente v
@@ -175,9 +174,7 @@
     from vente v, reprise r, Employe e1, Employe e2, voiture voit
     where v.id_vehicule = r.id_vehicule and v.date_achat < r.Date_reprise
     and e1.matricule = v.mat_vendeur and e2.matricule = r.mat_vendeur
-    and e1.lieu_de_travail != e2.lieu_de_travail
-    and v.id_vehicule = voit.id_voiture;
-    
+    and e1.lieu_de_travail != e2.lieu_de_travail;
     -- 4. Calculer le profit de chaque concessionnaire sur l’année 2023.
     select e.lieu_de_travail, sum(v.prix_achat) as profit
     from vente v, reprise r,Employe e 
