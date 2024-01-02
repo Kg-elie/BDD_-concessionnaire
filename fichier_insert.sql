@@ -605,7 +605,7 @@ INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilomet
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (45, 'AB-345-CD', 'Citro�n C4', 'Citadine', 0, 51183.1613508442, '1.2L ', 'Tissu bleu', 'Or', 2022, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (46, 'XY-678-ZW', 'Ford Focus', 'Compacte', 0, 52038.0863039399, '2.0L ', 'Cuir synth�tique noir', 'Violet fonc�', 2019, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (47, 'JK-901-LM', 'Opel Corsa', 'Citadine', 0, 52893.0112570356, '1.4L ', 'Alcantara beige', 'Bleu roi', 2020, 'Essence');
-INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (48, 'PQ-234-RS', 'Mercedes-Benz A-Class', 'Compacte', 0, 53747.9362101313, '1.6L ', 'Similicuir brun', 'Vert �meraude', 2021, 'Essence');
+INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (48, 'PQ-234-RS', 'Mercedes-Benz A-Class', 'Compacte', 102, 53747.9362101313, '1.6L ', 'Similicuir brun', 'Vert �meraude', 2021, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (49, 'UV-567-WX', 'BMW 1 Series', 'Compacte', 0, 54602.861163227, '2.0L ', 'Tissu rouge', 'Violet moyen', 2018, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (50, 'CD-890-EF', 'Fiat 501', 'Citadine', 0, 55457.7861163227, '1.2L ', 'Cuir blanc cass�', 'Jaune dor�', 2022, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (51, 'GH-123-IJ', 'Audi A4', 'Compacte', 0, 56312.7110694184, '1.8L ', 'Velours noir', 'Vert �meraude', 2019, 'Essence');
@@ -622,7 +622,7 @@ INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilomet
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (62, 'GH-456-IJ', 'BMW X2', 'SUV Compact', 0, 65716.8855534709, '2.0L ', 'Tissu gris', 'Jaune dor�', 2020, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (63, 'KL-789-MN', 'Audi Q4', 'SUV Compact', 0, 66571.8105065666, '1.6L ', 'Similicuir beige', 'Cyan fonc�', 2021, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (64, 'OP-012-QR', 'Mercedes-Benz GLA', 'SUV Compact', 0, 67426.7354596622, '2.0L ', 'Velours brun', 'Rouge corail', 2018, 'Essence');
-INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (65, 'ST-345-UV', 'Ford Kuga', 'SUV Compact', 0, 68281.6604127579, '2.0L ', 'Cuir perfor� blanc', 'Vert �meraude clair', 2022, 'Diesel');
+INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (65, 'ST-345-UV', 'Ford Kuga', 'SUV Compact', 41, 68281.6604127579, '2.0L ', 'Cuir perfor� blanc', 'Vert �meraude clair', 2022, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (66, 'WX-678-YZ', 'Renault Kadjar', 'SUV Compact', 0, 69136.5853658537, '1.5L ', 'Tissu noir', 'Bleu roi', 2019, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (67, 'AB-901-CD', 'Peugeot 2009', 'SUV Compact', 0, 69991.5103189493, '1.2L ', 'Alcantara gris', 'Violet fonc�', 2020, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (68, 'XY-234-ZW', 'Volkswagen T-Roc', 'SUV Compact', 0, 70846.435272045, '1.5L ', 'Cuir synth�tique marron', 'Vert olive', 2021, 'Essence');
@@ -644,7 +644,7 @@ INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilomet
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (84, 'GH-012-IJ', 'Toyota Yaris', 'Citadine', 0, 84525.2345215759, '1.0L ', 'Similicuir rouge', 'Vert citron', 2018, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (85, 'KL-345-MN', 'Citro�n C5', 'Citadine', 0, 85380.1594746716, '1.2L ', 'Cuir synth�tique beige', 'Turquoise', 2022, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (86, 'OP-678-QR', 'Ford Focus', 'Compacte', 0, 86235.0844277673, '2.0L ', 'Alcantara noir', 'Or', 2019, 'Diesel');
-INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (87, 'ST-901-UV', 'Opel Corsa', 'Citadine', 0, 87090.009380863, '1.4L ', 'Tissu vert', 'Violet moyen', 2020, 'Essence');
+INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (87, 'ST-901-UV', 'Opel Corsa', 'Citadine', 87, 87090.009380863, '1.4L ', 'Tissu vert', 'Violet moyen', 2020, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (88, 'WX-234-YZ', 'Mercedes-Benz A-Class', 'Compacte', 0, 87944.9343339587, '1.6L ', 'Velours bleu', 'Rouge ch�taigne', 2021, 'Essence');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (89, 'AB-567-CD', 'BMW 1 Series', 'Compacte', 0, 88799.8592870544, '2.0L ', 'Cuir perfor� noir', 'Jaune dor', 2018, 'Diesel');
 INSERT INTO Voiture (id_voiture, immatriculation, modele, type_vehicule, kilometrage, prix, motorisation, sellerie, couleur, anne_fabrication, carburant) VALUES (90, 'XY-890-ZW', 'Fiat 502', 'Citadine', 0, 89654.7842401501, '1.2L ', 'Similicuir gris', 'Bleu roi', 2022, 'Essence');
@@ -871,7 +871,7 @@ INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) 
 INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (11, 21, 11, '21-Oct-2022', 26000.0);
 INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (12, 23, 12, '09-Sep-2023', 24000.0);
 INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (13, 26, 13, '26-Jan-2023', 23000.0);
-INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (14, 29, 14, '08-Feb-2019', 30000.0);
+INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (14, 2, 14, '08-Feb-2019', 30000.0);
 INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (15, 32, 15, '22-Nov-2023', 26500.0);
 INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (16, 34, 16, '04-Sep-2022', 21000.0);
 INSERT INTO Vente (id_client, mat_vendeur, id_vehicule, Date_achat, prix_achat) VALUES (17, 35, 17, '08-Jan-2023', 29000.0);
@@ -961,6 +961,8 @@ INSERT INTO Reprise (id_client, mat_vendeur, id_vehicule, Date_reprise, estimati
 INSERT INTO Reprise (id_client, mat_vendeur, id_vehicule, Date_reprise, estimation) VALUES (65, 103, 160, '22-Jul-2020', 148644.606003752);
 INSERT INTO Reprise (id_client, mat_vendeur, id_vehicule, Date_reprise, estimation) VALUES (100, 2, 75, '09-Oct-2023', 71830.0);
 INSERT INTO Reprise (id_client, mat_vendeur, id_vehicule, Date_reprise, estimation) VALUES (90, 4, 65, '17-Mar-2023', 68281.6604127579);
+INSERT INTO Reprise (id_client, mat_vendeur, id_vehicule, Date_reprise, estimation) VALUES (73, 164, 48, '17-Mar-2023', 68281.6604127579);
+
 INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (1, '42 Rue Imaginaire, Paris', '01-Jun-2019', '15-Oct-2021');
 INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (2, '42 Rue Imaginaire, Paris', '15-Sep-2020', '28-Nov-2022');
 INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (3, '42 Rue Imaginaire, Paris', '07-Mar-2021', '12-Nov-2022');
@@ -1263,6 +1265,7 @@ INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) 
 INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (300, '14 Boulevard de lImagination, Metz', '20-Jun-2022', NULL);
 INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (75, '2 All�e de lEnvo�tement, Toulon', '09-Oct-2023', NULL);
 INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (65, '5 Rue de lIllusion, Nice', '17-Mar-2023', NULL);
+INSERT INTO Stockage (id_vehicule, adr_concessionnaire, date_exe, date_retrait) VALUES (73,'27 Avenue de lÉmeraude, Angers','30-Dec-2023');
 UPDATE Concessionnaire SET mat_responsable = 1 WHERE Adresse = "42 Rue Imaginaire, Paris";
 UPDATE Concessionnaire SET mat_responsable = 2 WHERE Adresse = "17 Avenue des R�ves, Marseille";
 UPDATE Concessionnaire SET mat_responsable = 3 WHERE Adresse = "8 Rue de l'Invention, Lyon";

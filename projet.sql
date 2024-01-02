@@ -23,7 +23,7 @@
         primary key(Adresse);
         ALTER TABLE concessionnaire   
         add CONSTRAINT CHK_taille    
-        CHECK ( taille_stockage >= 30);
+        CHECK ( taille_stockage >= 1);
 
 
     create table Employe(
@@ -193,19 +193,16 @@
         having count(id_vehicule) = taille_stockage ;
     
     -- 7. Quels sont les vendeurs qui ont vendu tous les types de véhicules ? a finir
-        select *
-        from employe e
-        where not exist( select *
-            from select voiture type
-            where not exist( select *
-            from vente  ve, voiture voit
-            where e.matricule = ve.mat_vendeur 
-            and ve.id_vehicule = vo.id_voiture
-            and voit.type_vehicule = ve.type_vehicule
-        )) ;
+        SELECT e.nom , COUNT(DISTINCT vo.type_vehicule), COUNT(DISTINCT voit.type_vehicule)
+            FROM Vente ve, voiture vo, employe e, voiture voit
+            WHERE ve.mat_vendeur = e.matricule
+    		and ve.id_vehicule = vo.id_voiture 
+    		group by e.nom
+    		having COUNT(DISTINCT vo.type_vehicule) = COUNT(DISTINCT voit.type_vehicule);
+
     
     -- 8. Quels véhicules n’ont pas été vendu pendant l’année 2023 ?
-        sselect  voit.id_voiture, voit.immatriculation, voit.modele, voit.type_vehicule, voit.prix
+        select distinct voit.modele, voit.type_vehicule
         from  voiture voit
         where voit.id_voiture not in (select id_vehicule
             from vente v2
@@ -220,7 +217,7 @@
     
     -- 10. Quels vendeurs ont repris un véhicule qu’ils avaient eux-mêmes vendu ?
         select e.matricule, e.nom, e.prenom
-        from employe, reprise r, vente v
+        from employe e, reprise r, vente v
         where v.id_vehicule = r.id_vehicule
         and v.mat_vendeur = r.mat_vendeur
         and e.matricule = v.mat_vendeur;
@@ -232,9 +229,12 @@
         group by e.lieu_de_travail;
     
     -- 12. Quel est le meilleur vendeur pour chaque concessionnaire ? a finir
-        select e.liu_de_travail, e.nom, e.prenom 
-        from employe, select v.matricule 
-        where e.matricule in 
+        select e.lieu_de_travail,e.nom,max(t.TTventes)
+        from employe e, (select v.mat_vendeur vendeur, sum(v.prix_achat) TTventes
+            from vente v
+            group by v.mat_vendeur)  t
+        where e.matricule  = t.vendeur
+        group by e.lieu_de_travail, e.nom;
     
     -- 13. Quel est l’employé qui a touché le plus gros salaire en octobre 2023 ?
     
@@ -251,30 +251,8 @@ CREATE ROLE resp;
 
 CREATE ROLE vendeur;
 
-create VIEW stock_concess as  
-select adr_concessionnaire, count(id_vehicule) as stock
-from Stockage
-GROUP by adr_concessionnaire;
 
-create view effectif_concess as 
-select lieu_de_travail, count(matricule) as effectif
-from Employe
-group by lieu_de_travail;
 
-create VIEW donne_employe as 
-select E.nom, E.prenom, E.lieu_de_travail, P.base_salariale
-from Employe E, Poste P, occupe O
-where E.matricule = O.matricule and O.fonction = p.Fonction ;
-
-create view vente2023 AS
-select id_voiture, modele ,type_vehicule ,kilometrage , motorisation ,sellerie ,couleur ,anne_fabrication ,carburant
-from Voiture,vente
-where id_vehicule = id_voiture and date_achat >= '01-jan-2023';
-
-create view donne_resp as 
-select nom, prenom, Adresse
-from concessionnaire, Employe
-where mat_responsable = matricule;
 
 -- E/  Intégrité des données : les triggers 
 

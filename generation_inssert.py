@@ -61,15 +61,6 @@ for table, columns in tables_columns.items():
 
 # Ajouter les commandes INSERT pour la table "responsable"
 responsable_df = pd.read_excel(excel_file_path, 'responsable')
-sql_insert_template_responsable = "INSERT INTO responsable (mat_responsable, Adresse) VALUES (%s, %s);"
-for index, row in responsable_df.iterrows():
-    # Enlever les apostrophes dans les données de chaîne
-    values_responsable = [str(val).replace('\'', '') if pd.notna(val) else 'NULL' for val in row]
-
-    # Entourer les adresses par des guillemets
-    values_responsable[1] = f'"{values_responsable[1]}"' if pd.notna(row['Adresse']) else 'NULL'
-
-    sql_insert_commands.append((sql_insert_template_responsable, values_responsable))
 
 # Mettre à jour la table "Concessionnaire" pour inclure le "Matricule" du responsable
 update_command = "UPDATE Concessionnaire SET mat_responsable = %s WHERE Adresse = %s;"
