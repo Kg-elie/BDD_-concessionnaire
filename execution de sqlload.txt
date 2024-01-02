@@ -1,0 +1,10 @@
+
+sqlldr control=Client.ctl log=Client.log data=Client.txt;
+sqlldr control=Concessionnaire.ctl log=Concessionnaire.log data=Concessionnaire.txt;
+sqlldr control=Pose.ctl log=Poste.log data=Poste.txt;
+sqlldr control=Client.ctl log=Client.log data=Client.txt;
+sqlldr control=Employe.ctl log=Employe.log data=Employe.txt;
+sqlldr control=Occupe.ctl log=Occupe.log data=Occupe.txt;
+sqlldr control=Voiture.ctl log=Voiture.log data=Voiture.txt;
+sqlldr control=Vente.ctl log=Vente.log data=Vente.txt;
+sqlldr control=Reprise.ctl log=Reprise.log data=Reprise.txt;

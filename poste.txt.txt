@@ -1,0 +1,30 @@
+'Conseiller commercial automobile',1500,NULL
+'Vendeur',1600,10.0
+'agent dentretiens',1470,NULL
+'Responsable des ventes',2212,NULL
+'Conseiller financier automobile',1960,NULL
+'Gestionnaire de flotte',1456,NULL
+'Responsable des pi ces d tach es',1789,NULL
+'Technicien automobile',2134,NULL
+'M canicien automobile',1654,NULL
+'Carrossier',1845,NULL
+'Pr parateur de v hicules',2002,NULL
+'Responsable du service apr s-vente',1556,NULL
+'R ceptionnaire atelier',1689,NULL
+'Chef d quipe m canique',2256,NULL
+'Technicien de maintenance',1423,NULL
+'Sp cialiste en diagnostic  lectronique',2018,NULL
+'Carreleur automobile',1734,NULL
+'Peintre automobile',2167,NULL
+'Magasinier pi ces d tach es',1602,NULL
+'Agent de location de v hicules',1978,NULL
+'Conseiller en assurance automobile',1490,NULL
+'Sp cialiste en financement automobile',1823,NULL
+'Responsable du marketing et de la communication',2290,NULL
+'Coordinateur logistique',1456,NULL
+'Responsable des ressources humaines',2076,NULL
+'Sp cialiste en garanties et extensions de garantie',1667,NULL
+'D veloppeur informatique sp cialis  en concession automobile',1890,NULL
+'Agent de service   la client le',1545,NULL
+'Expert en reprise et  valuation de v hicules',1756,NULL
+'Formateur technique automobile',2212,NULL
