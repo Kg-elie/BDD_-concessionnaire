@@ -1,0 +1,17 @@
+ajout des droits si ce n'est pas deja fait :
+
+
+[oracle@localhost ~]$ sqlplus 
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Oct 2 11:54:06 2021 Copyright (c) 1982, 2010, 
+Oracle. All rights reserved. 
+Enter user-name: system
+Enter password: oracle
+
+
+
+-- Accorder le privilège SELECT sur USER_TRIGGERS
+SQL> grant USER_TRIGGERS to etudiant; 
+
+
+-- Accorder le privilège SELECT sur USER_SOURCE
+SQL> grant USER_SOURCE  to etudiant; 

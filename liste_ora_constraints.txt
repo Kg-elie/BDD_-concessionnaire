@@ -1,0 +1,32 @@
+SET SERVEROUTPUT ON
+DECLARE
+   v_constraint_name VARCHAR2(100);
+   v_constraint_type VARCHAR2(20);
+   v_search_condition VARCHAR2(4000);
+   v_source_code CLOB;
+BEGIN
+   FOR c IN (SELECT table_name, constraint_name, constraint_type, search_condition
+             FROM user_constraints
+             WHERE table_name IS NOT NULL
+             ORDER BY table_name, constraint_type)
+   LOOP
+      v_constraint_name := c.constraint_name;
+      v_constraint_type := c.constraint_type;
+      v_search_condition := c.search_condition;
+
+      DBMS_OUTPUT.PUT_LINE('Table: ' || c.table_name);
+      DBMS_OUTPUT.PUT_LINE('Constraint Name: ' || v_constraint_name);
+      DBMS_OUTPUT.PUT_LINE('Constraint Type: ' || v_constraint_type);
+
+      IF v_constraint_type IN ('C', 'U', 'P', 'R') THEN
+         SELECT TEXT INTO v_source_code
+         FROM user_source
+         WHERE name = v_constraint_name AND type = 'CONSTRAINT';
+         
+         DBMS_OUTPUT.PUT_LINE('Source Code: ' || v_source_code);
+      END IF;
+
+      DBMS_OUTPUT.PUT_LINE('-------------------------');
+   END LOOP;
+END;
+/

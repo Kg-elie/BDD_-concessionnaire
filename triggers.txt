@@ -1,0 +1,79 @@
+Trigger pour vérifier le format de l'email du client :
+------
+CREATE OR REPLACE TRIGGER trg_check_email
+BEFORE INSERT OR UPDATE ON Clients
+FOR EACH ROW
+BEGIN
+   IF NOT REGEXP_LIKE(:NEW.e_mail, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$') THEN
+      RAISE_APPLICATION_ERROR(-20001, 'Format d''email invalide');
+   END IF;
+END;
+/
+-------
+
+Trigger pour vérifier la base salariale du poste :
+-------
+CREATE OR REPLACE TRIGGER trg_check_base_salariale
+BEFORE INSERT OR UPDATE ON Poste
+FOR EACH ROW
+BEGIN
+   IF :NEW.base_salariale < 1400 THEN
+      RAISE_APPLICATION_ERROR(-20002, 'La base salariale doit être supérieure ou égale à 1400');
+   END IF;
+END;
+/
+-------
+
+Trigger pour vérifier les dates d'occupation :
+-------
+CREATE OR REPLACE TRIGGER trg_check_dates_occupation
+BEFORE INSERT OR UPDATE ON Occupe
+FOR EACH ROW
+BEGIN
+   IF :NEW.debut >= :NEW.fin THEN
+      RAISE_APPLICATION_ERROR(-20003, 'La date de début doit être antérieure à la date de fin');
+   END IF;
+END;
+/
+-------
+
+Trigger pour vérifier la taille de stockage du concessionnaire :
+-------
+CREATE OR REPLACE TRIGGER trg_check_taille_stockage
+BEFORE INSERT OR UPDATE ON Concessionnaire
+FOR EACH ROW
+BEGIN
+   IF :NEW.taille_stockage <= 1 THEN
+      RAISE_APPLICATION_ERROR(-20004, 'La taille de stockage doit être supérieure à 1');
+   END IF;
+END;
+/
+-------
+
+Trigger pour calculer le salaire total d'un employé en fonction des ventes :
+-------
+CREATE OR REPLACE TRIGGER trg_calcul_salaire
+BEFORE INSERT OR UPDATE ON Vente
+FOR EACH ROW
+DECLARE
+   v_pourcentage NUMBER;
+BEGIN
+   SELECT pourcentage_par_vente INTO v_pourcentage
+   FROM Poste
+   WHERE Fonction = (SELECT Fonction FROM Employe WHERE Matricule = :NEW.mat_vendeur);
+
+   :NEW.prix_achat := :NEW.prix_achat + (:NEW.prix_achat * v_pourcentage / 100);
+END;
+/
+-------
+
+Trigger pour mettre à jour la date de retrait lorsqu'un véhicule est retiré du stock :
+-------
+CREATE OR REPLACE TRIGGER trg_maj_date_retrait
+AFTER DELETE ON Stockage
+FOR EACH ROW
+BEGIN
+   UPDATE Stockage SET date_retrait = SYSDATE WHERE Id_vehicule = :OLD.Id_vehicule;
+END;
+/
+-------

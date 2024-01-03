@@ -1,0 +1,27 @@
+SET SERVEROUTPUT ON
+
+DECLARE
+   v_trigger_name VARCHAR2(100);
+   v_table_name VARCHAR2(100);
+   v_source_code CLOB;
+BEGIN
+   FOR t IN (SELECT trigger_name, table_name
+             FROM user_triggers
+             WHERE table_name IS NOT NULL
+             ORDER BY table_name, trigger_name)
+   LOOP
+      v_trigger_name := t.trigger_name;
+      v_table_name := t.table_name;
+
+      DBMS_OUTPUT.PUT_LINE('Table: ' || v_table_name);
+      DBMS_OUTPUT.PUT_LINE('Trigger Name: ' || v_trigger_name);
+
+      SELECT TEXT INTO v_source_code
+      FROM user_source
+      WHERE name = v_trigger_name AND type = 'TRIGGER';
+
+      DBMS_OUTPUT.PUT_LINE('Source Code: ' || v_source_code);
+      DBMS_OUTPUT.PUT_LINE('-------------------------');
+   END LOOP;
+END;
+/
