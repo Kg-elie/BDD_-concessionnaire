@@ -258,4 +258,4 @@ CREATE ROLE vendeur;
 
 
 
--- F/  Méta-données
+-- F/  Méta-donnéeswwwwwwwwwwwwwwwww

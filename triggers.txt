@@ -42,7 +42,7 @@ END;
 -------
 4.
 CREATE OR REPLACE TRIGGER reprise_check_vendeur
-BEFORE INSERT OR UPDATE ON Vente
+BEFORE INSERT OR UPDATE ON reprise
 FOR EACH ROW
 DECLARE
     v_count NUMBER;
@@ -67,13 +67,10 @@ FOR EACH ROW
 DECLARE
     anciennete NUMBER;
 BEGIN
-    -- Calcul de l'ancienneté de l'employé
-    SELECT EXTRACT(YEAR FROM sysdate) - EXTRACT(YEAR FROM date_embauche)
+    SELECT 2024 - EXTRACT(YEAR FROM debut)
     INTO anciennete
-    FROM Employe
+    FROM occupe
     WHERE Matricule = :NEW.mat_responsable;
-
-    -- Vérification de l'ancienneté
     IF anciennete < 4 THEN
         RAISE_APPLICATION_ERROR(-20001, 'Le responsable du concessionnaire doit avoir au moins 4 ans d''ancienneté.');
     END IF;
